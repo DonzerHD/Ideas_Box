@@ -16,8 +16,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
-
+from authentication.views import login_view , logout_user , register
+from box.views import create_ideas_box , lists_box , vote
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("", views.index, name="index"),
+    path("login/", login_view, name="login"),
+    path('logout/', logout_user, name='logout'),
+    path("register/", register, name="register"),
+    path("create_box/", create_ideas_box, name="create_box"),
+    path("list_box/", lists_box, name="list_box"),
+    path("vote/<int:box_id>/", vote, name="vote"),
 ]
