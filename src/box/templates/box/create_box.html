@@ -1,10 +1,21 @@
 {% extends 'base.html' %} 
 {% block head %}<title>Box Create</title>{% endblock head %}
 {% block content %}
-<h1>Create Ideas Box</h1>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit" class="btn btn-primary">Create</button>
-</form>
+<div class="container d-flex justify-content-center align-items-center my-5">
+  <div class="card p-4">
+    <h1 class="mb-4">Create Ideas Box</h1>
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        {{ form.title.label_tag }}
+        {{ form.title }}
+      </div>
+      <div class="form-group">
+        {{ form.description.label_tag }}
+        {{ form.description }}
+      </div>
+      <button type="submit" class="btn btn-primary">Create</button>
+    </form>
+  </div>
+</div>
 {% endblock content %}

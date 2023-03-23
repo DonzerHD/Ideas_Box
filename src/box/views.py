@@ -34,14 +34,17 @@ def lists_box(request):
     return render(request, 'box/list_box.html', {'boxs': boxs, 'user_votes': user_votes})
 
 @login_required
-def vote(request, box_id):
+def vote(request, box_id, vote_type):
     box = get_object_or_404(Ideas_Box, id=box_id)
 
     try:
-        vote = Vote(user=request.user, box=box)
+        vote = Vote(user=request.user, box=box, vote_type=vote_type)
         vote.save()
 
-        box.votes += 1
+        if vote_type == 'upvote':
+            box.upvotes += 1
+        elif vote_type == 'downvote':
+            box.downvotes += 1
         box.save()
     except IntegrityError:
         pass

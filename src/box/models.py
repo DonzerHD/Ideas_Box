@@ -8,11 +8,12 @@ class Ideas_Box(models.Model):
     description = models.TextField()
     createur = models.ForeignKey(User, on_delete=models.CASCADE)
     date = models.DateTimeField(auto_now_add=True)
-    votes = models.PositiveIntegerField(default=0)
+    upvotes = models.IntegerField(default=0)
+    downvotes = models.IntegerField(default=0)
     
 class Vote(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     box = models.ForeignKey(Ideas_Box, on_delete=models.CASCADE)
-    
+    vote_type = models.CharField(max_length=10, choices=[('upvote', 'Upvote'), ('downvote', 'Downvote')], default='upvote')
     class Meta:
         unique_together = ('user', 'box')

@@ -26,5 +26,5 @@ urlpatterns = [
     path("register/", register, name="register"),
     path("create_box/", create_ideas_box, name="create_box"),
     path("list_box/", lists_box, name="list_box"),
-    path("vote/<int:box_id>/", vote, name="vote"),
+    path('vote/<int:box_id>/<str:vote_type>/', vote, name='vote'),
 ]

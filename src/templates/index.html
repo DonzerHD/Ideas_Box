@@ -1,12 +1,20 @@
 {% extends 'base.html' %} 
 {% block head %} <title>Welcome</title> {% endblock head %} 
 {% block content %}
-<h1>Welcome to my idea box website! !</h1>
-<p>
-  This site allows you to suggest ideas for projects, challenges or activities to be carried out in groups or individually.
-</p>
-<p>
-  To participate, simply create an account and submit your idea. You can also vote for or against the ideas of other learners, comment on them and share them on social networks.
-</p>
-
+<div class="container">
+  <h1 class="my-5 text-center">Welcome to my idea box website!</h1>
+  <p>
+    This site allows you to suggest ideas for projects, challenges, or activities to be carried out in groups or individually.
+  </p>
+  <p>
+    To participate, simply create an account and submit your idea. You can also vote for or against other users ideas, comment on them, and share them on social networks.
+  </p>
+  {% if user.is_authenticated %}
+  {% else %}
+  <div class="text-center mt-5">
+    <a href="{% url 'register' %}" class="btn btn-primary mr-2">Sign Up</a>
+    <a href="{% url 'login' %}" class="btn btn-secondary">Log In</a>
+  </div>
+  {% endif %}
+</div>
 {% endblock content %}

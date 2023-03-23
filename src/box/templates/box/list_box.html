@@ -16,20 +16,21 @@
           <div class="card-body">
             <p class="card-text">{{ box.description }}</p>
             <p class="card-text"><small class="text-muted">Created by {{ box.createur.username }} on {{ box.date|date:'d M Y' }}</small></p>
-            <p class="card-text">Votes: {{ box.votes }}</p> 
+            <p class="card-text">Upvotes: {{ box.upvotes }} | Downvotes: {{ box.downvotes }}</p>
           </div>
           <div class="card-footer">
             {% if box.id in user_votes %}
-              <a class="btn btn-secondary disabled">Déjà voté</a>
+              <a class="btn btn-secondary disabled">Already voted</a>
             {% else %}
-              <a href="{% url 'vote' box.id %}" class="btn btn-primary">Vote</a>
+              <a href="{% url 'vote' box.id 'upvote' %}" class="btn btn-primary">For</a>
+              <a href="{% url 'vote' box.id 'downvote' %}" class="btn btn-danger">Against</a>
             {% endif %}
           </div>
         </div>
       </div>
     {% empty %}
       <div class="col-md-12 text-center">
-        <p>No ideas box found.</p>
+         <p>No ideas box found.</p>
       </div>
     {% endfor %}
   </div>
