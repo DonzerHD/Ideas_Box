@@ -20,7 +20,7 @@
           </div>
           <div class="card-footer">
             {% if box.id in user_votes %}
-              <span class="btn btn-secondary disabled">Déjà voté</span>
+              <a class="btn btn-secondary disabled">Déjà voté</a>
             {% else %}
               <a href="{% url 'vote' box.id %}" class="btn btn-primary">Vote</a>
             {% endif %}

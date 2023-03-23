@@ -44,7 +44,6 @@ def vote(request, box_id):
         box.votes += 1
         box.save()
     except IntegrityError:
-        # L'utilisateur a déjà voté pour cette idée
         pass
 
     return redirect('list_box')
