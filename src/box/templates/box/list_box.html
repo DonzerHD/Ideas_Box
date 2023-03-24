@@ -1,11 +1,25 @@
 {% extends 'base.html' %} 
+{% load static %}
 {% block head %}
   <title>Box List</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="{% static 'box/js/list_box.js' %}"></script>
 {% endblock head %}
 {% block content %}
 <div class="container">
   <h1 class="my-5 text-center">Ideas Box List</h1>
+  <div class="row mb-3">
+    <div class="col-md-12 d-flex justify-content-end">
+        <div class="dropdown" id="sortDropdown">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Trier par
+          </button>
+                <div class="dropdown-menu" aria-labelledby="sortMenu">
+                <a class="dropdown-item" href="?order_by=date">Les plus récentes</a>
+                <a class="dropdown-item" href="?order_by=votes">Les plus populaires</a>
+            </div>
+        </div>
+    </div>
+  </div>
   <div class="row">
     {% for box in boxs %}
       <div class="col-md-4 mb-4">
@@ -33,6 +47,56 @@
          <p>No ideas box found.</p>
       </div>
     {% endfor %}
+  </div>
+  div class="row">
+  <div class="col-md-12">
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        {% if boxs.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page=1&order_by={{ order_by }}">&laquo; First</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ boxs.previous_page_number }}&order_by={{ order_by }}">Previous</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <span class="page-link">&laquo; First</span>
+        </li>
+        <li class="page-item disabled">
+          <span class="page-link">Previous</span>
+        </li>
+        {% endif %}
+        
+        {% for i in boxs.paginator.page_range %}
+        {% if boxs.number == i %}
+        <li class="page-item active">
+          <span class="page-link">{{ i }}</span>
+        </li>
+        {% else %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ i }}&order_by={{ order_by }}">{{ i }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        
+        {% if boxs.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ boxs.next_page_number }}&order_by={{ order_by }}">Next</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ boxs.paginator.num_pages }}&order_by={{ order_by }}">Last &raquo;</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <span class="page-link">Next</span>
+        </li>
+        <li class="page-item disabled">
+          <span class="page-link">Last &raquo;</span>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
   </div>
 </div>
 {% endblock content %}
