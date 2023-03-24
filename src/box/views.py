@@ -15,11 +15,10 @@ def create_ideas_box(request):
     if request.method == 'POST':
         form = IdeasBoxForm(request.POST)
         if form.is_valid():
-            # Récupérer les données du formulaire
             title = form.cleaned_data.get('title')
             description = form.cleaned_data.get('description')
 
-            # Créer une nouvelle boîte d'idées
+        
             new_ideas_box = Ideas_Box(title=title, description=description, createur=request.user)
             new_ideas_box.save()
             return redirect('index')
