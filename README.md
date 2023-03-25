@@ -24,9 +24,8 @@ Ideas_Box is a web application that allows users to create, share, and vote on b
 1. Clone the repository
 2. Create a virtual environment with Python 3.9
 3. Install the dependencies with `pip install -r requirements.txt`
-4. Create a PostgreSQL database and add the credentials to the `settings.py` file
-5. Run the database migrations with `python manage.py migrate`
-6. Start the server with `python manage.py runserver`
+4. Run the database migrations with `python manage.py migrate`
+5. Start the server with `python manage.py runserver`
 
 ## Usage
 
@@ -44,7 +43,7 @@ This application can also be run using Docker:
 Don't forget to update the database settings in settings.py and the IP address in settings.py to match your environment.
 
 ## Deployment
-This application can be deployed to Azure. A PostgreSQL database can be set up on Azure, and the `DATABASES` setting in `settings.py` should be updated accordingly.
+This application can be deployed to Azure.
 
 ## License
 This project is licensed under the terms of the MIT license.
