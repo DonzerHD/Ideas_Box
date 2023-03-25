@@ -38,7 +38,7 @@ Ideas_Box is a web application that allows users to create, share, and vote on b
 ## Docker
 This application can also be run using Docker:
 - Build the Docker image: `docker build -t ideas-box` .
-- Run the Docker container: `docker run -p 8000:8000 ideas-box` .
+- Run the Docker container: `docker run -p 80:80 ideas-box` .
 
 Don't forget to update the database settings in settings.py and the IP address in settings.py to match your environment.
 
