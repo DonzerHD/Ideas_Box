@@ -48,5 +48,5 @@ This application can be deployed to Azure.
 ## License
 This project is licensed under the terms of the MIT license.
 
-## Creator
+## Creator
 * **Thomas.l59**[@DonzerHD](https://github.com/DonzerHD)
