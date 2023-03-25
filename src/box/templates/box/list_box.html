@@ -1,0 +1,116 @@
+{% extends 'base.html' %} 
+{% load static %}
+{% block head %}
+  <title>Box List</title>
+  <script src="{% static 'box/js/list_box.js' %}"></script>
+{% endblock head %}
+{% block content %}
+<!-- Page Content -->
+<div class="container">
+  <h1 class="my-5 text-center">Ideas Box List</h1>
+  <div class="row mb-3">
+    <!-- Dropdown -->
+    <div class="col-md-12 d-flex justify-content-end">
+        <div class="dropdown" id="sortDropdown">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortMenu" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Sort by
+          </button>
+                <!-- If the user has selected the sorting method "The most recents", the button is selected -->
+                <div class="dropdown-menu" aria-labelledby="sortMenu">
+                <a class="dropdown-item" href="?order_by=date">The most recents</a>
+                <!-- If the user has selected the sorting method "The most popular", the button is selected -->
+                <a class="dropdown-item" href="?order_by=votes">The most popular</a>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="row">
+    <!-- Box -->
+    {% for box in boxs %}
+      <div class="col-md-4 mb-4">
+        <div class="card h-100 shadow">
+          <div class="card-header bg-primary text-white">
+            <h5 class="card-title m-0">{{ box.title }}</h5>
+          </div>
+          <div class="card-body">
+            <p class="card-text">{{ box.description }}</p>
+            <p class="card-text"><small class="text-muted">Created by {{ box.createur.username }} on {{ box.date|date:'d M Y' }}</small></p>
+            <p class="card-text">Upvotes: {{ box.upvotes }} | Downvotes: {{ box.downvotes }}</p>
+          </div>
+          <div class="card-footer">
+            <!-- If the user has already voted, the buttons are disabled -->
+            {% if box.id in user_votes %}
+              <a class="btn btn-secondary disabled">Already voted</a>
+            {% else %}
+            <!-- If the user has not voted, the buttons are enabled -->
+              <a href="{% url 'vote' box.id 'upvote' %}" class="btn btn-primary">For</a>
+              <a href="{% url 'vote' box.id 'downvote' %}" class="btn btn-danger">Against</a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    <!-- End Box -->
+    <!-- If there is no box, a message is displayed -->
+    {% empty %}
+      <div class="col-md-12 text-center">
+         <p>No ideas box found.</p>
+      </div>
+    {% endfor %}
+  </div>
+  <!-- Pagination -->
+  <div class="row">
+  <div class="col-md-12">
+    <nav aria-label="Page navigation">
+      <ul class="pagination justify-content-center">
+        <!-- If there is a previous page, the button is enabled -->
+        {% if boxs.has_previous %}
+        <li class="page-item">
+          <a class="page-link" href="?page=1&order_by={{ order_by }}">&laquo; First</a>
+        </li>
+        <!-- If there is a next page, the button is enabled -->
+        <li class="page-item">
+          <a class="page-link" href="?page={{ boxs.previous_page_number }}&order_by={{ order_by }}">Previous</a>
+        </li>
+        <!-- If there is no previous page, the button is disabled -->
+        {% else %}
+        <li class="page-item disabled">
+          <span class="page-link">&laquo; First</span>
+        </li>
+        <!-- If there is no next page, the button is disabled -->
+        <li class="page-item disabled">
+          <span class="page-link">Previous</span>
+        </li>
+        {% endif %}
+        <!-- For each page, the button is enabled -->
+        {% for i in boxs.paginator.page_range %}
+        {% if boxs.number == i %}
+        <li class="page-item active">
+          <span class="page-link">{{ i }}</span>
+        </li>
+        {% else %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ i }}&order_by={{ order_by }}">{{ i }}</a>
+        </li>
+        {% endif %}
+        {% endfor %}
+        
+        {% if boxs.has_next %}
+        <li class="page-item">
+          <a class="page-link" href="?page={{ boxs.next_page_number }}&order_by={{ order_by }}">Next</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="?page={{ boxs.paginator.num_pages }}&order_by={{ order_by }}">Last &raquo;</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+          <span class="page-link">Next</span>
+        </li>
+        <li class="page-item disabled">
+          <span class="page-link">Last &raquo;</span>
+        </li>
+        {% endif %}
+      </ul>
+    </nav>
+  </div>
+</div>
+{% endblock content %}
