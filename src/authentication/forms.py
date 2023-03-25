@@ -47,11 +47,16 @@ class RegisterForm(forms.Form):
     
     def clean(self):
         """
-        Validate that the passwords match
+        Validates that the passwords match
         """
+        # Get the cleaned form data (without whitespace) from the parent class
         cleaned_data = super().clean()
+        # Get the values of the password1 and password2 fields from the cleaned form data
         password1 = cleaned_data.get("password1")
         password2 = cleaned_data.get("password2")
 
+        # Check if the two passwords do not match (using an OR statement to account for all possibilities)
         if password1 != password2 or password2 != password1:
+            # If the passwords do not match, add an error to the "password2" field
+            # with the message "Passwords do not match."
             self.add_error("password2", "Passwords do not match.")
